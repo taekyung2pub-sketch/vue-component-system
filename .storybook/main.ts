@@ -1,39 +1,44 @@
 import type { StorybookConfig } from '@storybook/vue3-vite'
 import vue from '@vitejs/plugin-vue'
+import path from 'path'
+import { mergeConfig } from 'vite'
 
 const config: StorybookConfig = {
     stories: ['../components/**/*.stories.@(js|jsx|ts|tsx)'],
+
     addons: [
         '@storybook/addon-essentials',
         '@storybook/addon-interactions',
+        '@storybook/addon-docs',
     ],
+
     framework: {
         name: '@storybook/vue3-vite',
         options: {},
     },
-    viteFinal: async (config: any) => {
-        return {
-            ...config,
-            plugins: [...(config.plugins || []), vue()],
+
+    viteFinal: async (config) => {
+        return mergeConfig(config, {
+            plugins: [vue()],
+
+            resolve: {
+                alias: {
+                    '@': path.resolve(__dirname, '../'),
+                    '~': path.resolve(__dirname, '../'),
+                },
+            },
+
             css: {
                 preprocessorOptions: {
                     scss: {
                         additionalData: `
-              @use "../assets/styles/_variables.scss" as *;
-              @use "../assets/styles/_mixins.scss" as mix;
+              @import "@/assets/styles/abstracts/_variables.scss";
+              @import "@/assets/styles/abstracts/_mixins.scss";
             `,
                     },
                 },
             },
-            resolve: {
-                ...config.resolve,
-                alias: {
-                    ...(config.resolve?.alias || {}),
-                    '~': new URL('..', import.meta.url).pathname,
-                    '@': new URL('..', import.meta.url).pathname,
-                },
-            },
-        }
+        })
     },
 }
 

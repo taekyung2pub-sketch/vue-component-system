@@ -1,4 +1,5 @@
 import type { Preview } from '@storybook/vue3'
+import '../assets/styles/front.scss'
 
 const preview: Preview = {
     parameters: {

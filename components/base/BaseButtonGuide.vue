@@ -1,13 +1,8 @@
-// BaseButton.stories.ts
-import type { Meta, StoryObj } from '@storybook/vue3'
-import BaseButton from './BaseButton.vue'
-import { CustomDocsPage } from '@/.storybook/DocsLayout'
-
-const guideHTML = `
-<div class="guide-wrap">
+<template>
+  <div class="guide-wrap">
     <header class="guide-header">
       <span class="guide-chip">Component Guide</span>
-      <h1 class="guide-title">BaseButton</h1>
+      <h1 class="guide-title">TextField</h1>
       <p class="guide-desc">
         사용자 입력을 처리하기 위한 기본 입력 컴포넌트입니다.
         로그인, 검색, 폼 작성 등 다양한 입력 흐름에서 공통적으로 사용됩니다.
@@ -80,54 +75,4 @@ const guideHTML = `
       </div>
     </section>
   </div>
-`
-
-const meta: Meta<typeof BaseButton> = {
-    title: 'base/Button',
-    component: BaseButton,
-    tags: ['autodocs'],
-
-    parameters: {
-        docs: {
-            page: CustomDocsPage(guideHTML),  // ← HTML 문자열로 전달
-        },
-    },
-
-    argTypes: {
-        variant: {
-            control: 'select',
-            options: ['primary', 'secondary', 'ghost'],
-        },
-        size: {
-            control: 'select',
-            options: ['sm', 'md', 'lg'],
-        },
-    },
-}
-
-export default meta
-type Story = StoryObj<typeof BaseButton>
-
-export const Primary: Story = {
-    args: {
-        variant: 'primary',
-        size: 'md',
-    },
-    render: (args) => ({
-        components: { BaseButton },
-        setup() { return { args } },
-        template: `<BaseButton v-bind="args">Button</BaseButton>`,
-    }),
-}
-
-export const Secondary: Story = {
-    args: {
-        variant: 'secondary',
-        size: 'md',
-    },
-    render: (args) => ({
-        components: { BaseButton },
-        setup() { return { args } },
-        template: `<BaseButton v-bind="args">Button</BaseButton>`,
-    }),
-}
+</template>
